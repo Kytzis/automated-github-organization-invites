@@ -22,6 +22,11 @@
       "description": "Background color for front page. Can be one of [grey, white, blue, green, red, pink]. Default is white.",
       "value":  "",
       "required": false
+    },
+    "REQUIRED_DOMAIN": {
+        "description": "Required email address domain to get an invite to organization. For an email xxx@yyy.zzz, this should be \"yyy.zzz\". User must have this email set to public on their GitHub.",
+        "value": "",
+        "required": false
     }
   }
 }

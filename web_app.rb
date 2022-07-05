@@ -8,6 +8,7 @@ TOKEN = ENV['GITHUB_TOKEN']
 ORG_NAME = ENV['ORGANIZATION_NAME']
 TEAM_NAME = ENV['TEAM_NAME']
 BACKGROUND_CHOICE = ENV['BACKGROUND_COLOR']
+REQUIRED_DOMAIN = ENV['REQUIRED_DOMAIN']
 
 if BACKGROUND_CHOICE == 'green'
     background_css = "/css/background_colors/green.css"
@@ -35,6 +36,18 @@ def user_exists?(client, user)
     return false
   end
   return true
+end
+
+def user_allowed?(client, user)
+  begin
+    profile = client.user(user)
+    profile.emails().each do |email|
+      if email.split('@', 2)[2] == REQUIRED_DOMAIN
+        return true
+      end
+    end
+    return false
+  end
 end
 
 def get_org_avatar_url(client)
@@ -112,6 +125,10 @@ post "/add" do
   username = params["github-user"]
   unless user_exists?(client, username)
     return "User not found. Please check your spelling"
+  end
+
+  unless user_allowed?(client, username)
+    return "User is not allowed into the organization. Please check if you have the right email address added, and that it's set to public"
   end
 
   team = get_team(client)
