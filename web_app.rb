@@ -126,9 +126,10 @@ post "/add" do
   unless user_exists?(client, username)
     return "User not found. Please check your spelling"
   end
-
-  unless user_allowed?(client, username)
-    return "User is not allowed into the organization. Please check if you have the right email address added, and that it's set to public"
+  unless REQUIRED_DOMAIN == ""
+    unless user_allowed?(client, username)
+        return "User is not allowed into the organization. Please check if you have the right email address added, and that it's set to public"
+    end
   end
 
   team = get_team(client)

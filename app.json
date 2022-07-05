@@ -24,7 +24,7 @@
       "required": false
     },
     "REQUIRED_DOMAIN": {
-        "description": "Required email address domain to get an invite to organization. For an email xxx@yyy.zzz, this should be \"yyy.zzz\". User must have this email set to public on their GitHub.",
+        "description": "(OPTIONAL) Required email address domain to get an invite to organization. For an email xxx@yyy.zzz, this should be \"yyy.zzz\". User must have this email set to public on their GitHub.",
         "value": "",
         "required": false
     }
