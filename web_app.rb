@@ -9,8 +9,6 @@ ORG_NAME = ENV['ORGANIZATION_NAME']
 TEAM_NAME = ENV['TEAM_NAME']
 BACKGROUND_CHOICE = ENV['BACKGROUND_COLOR']
 REQUIRED_DOMAIN = ENV['REQUIRED_DOMAIN']
-GITHUB_LOGIN = ENV['GITHUB_LOGIN']
-GITHUB_PASSWORD = ENV['GITHUB_PASSWORD']
 
 if BACKGROUND_CHOICE == 'green'
     background_css = "/css/background_colors/green.css"
@@ -30,8 +28,6 @@ html_template_path = File.join(__dir__, 'views', 'index.slim')
 @layout = File.read(html_template_path)
 
 client = Octokit::Client.new(access_token: TOKEN)
-client.login = GITHUB_LOGIN
-client.password = GITHUB_PASSWORD
 
 def user_exists?(client, user)
   begin
