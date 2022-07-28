@@ -45,10 +45,11 @@ end
 def user_allowed?(client, user)
   begin
     profile = client.user(user)
+    puts profile
     if profile[:email].split('@', 2)[1] == REQUIRED_DOMAIN
       return true
     end
-    return false
+    return false 
   end
 end
 
