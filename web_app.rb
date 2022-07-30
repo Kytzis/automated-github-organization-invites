@@ -8,19 +8,20 @@ TOKEN = ENV['GITHUB_TOKEN']
 ORG_NAME = ENV['ORGANIZATION_NAME']
 TEAM_NAME = ENV['TEAM_NAME']
 BACKGROUND_CHOICE = ENV['BACKGROUND_COLOR']
+REQUIRED_DOMAIN = ENV['REQUIRED_DOMAIN']
 
 if BACKGROUND_CHOICE == 'green'
-    background_css = "/css/background_colors/green.css"
+  background_css = "/css/background_colors/green.css"
 elsif BACKGROUND_CHOICE == 'blue'
-    background_css = "/css/background_colors/blue.css"
+  background_css = "/css/background_colors/blue.css"
 elsif BACKGROUND_CHOICE == 'pink'
-    background_css = "/css/background_colors/pink.css"
+  background_css = "/css/background_colors/pink.css"
 elsif BACKGROUND_CHOICE == 'red'
-    background_css = "/css/background_colors/red.css"
+  background_css = "/css/background_colors/red.css"
 elsif BACKGROUND_CHOICE == 'grey'
-    background_css = "/css/background_colors/grey.css"
+  background_css = "/css/background_colors/grey.css"
 else
-    background_css = "/css/background_colors/white.css"
+  background_css = "/css/background_colors/white.css"
 end
 
 html_template_path = File.join(__dir__, 'views', 'index.slim')
@@ -35,6 +36,20 @@ def user_exists?(client, user)
     return false
   end
   return true
+end
+
+def user_allowed?(client, user)
+  begin
+    profile = client.user(user)
+    STDERR.puts profile.attrs
+    if profile[:email].nil?
+      return false
+    end
+    if profile[:email].split('@', 2)[1] == REQUIRED_DOMAIN
+      return true
+    end
+    return false 
+  end
 end
 
 def get_org_avatar_url(client)
@@ -112,6 +127,11 @@ post "/add" do
   username = params["github-user"]
   unless user_exists?(client, username)
     return "User not found. Please check your spelling"
+  end
+  unless REQUIRED_DOMAIN == ""
+    unless user_allowed?(client, username)
+        return "User is not allowed into the organization. Please check if you have the right email address added, and that it's set to be publicly displayed"
+    end
   end
 
   team = get_team(client)
