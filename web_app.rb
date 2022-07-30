@@ -11,17 +11,17 @@ BACKGROUND_CHOICE = ENV['BACKGROUND_COLOR']
 REQUIRED_DOMAIN = ENV['REQUIRED_DOMAIN']
 
 if BACKGROUND_CHOICE == 'green'
-    background_css = "/css/background_colors/green.css"
+  background_css = "/css/background_colors/green.css"
 elsif BACKGROUND_CHOICE == 'blue'
-    background_css = "/css/background_colors/blue.css"
+  background_css = "/css/background_colors/blue.css"
 elsif BACKGROUND_CHOICE == 'pink'
-    background_css = "/css/background_colors/pink.css"
+  background_css = "/css/background_colors/pink.css"
 elsif BACKGROUND_CHOICE == 'red'
-    background_css = "/css/background_colors/red.css"
+  background_css = "/css/background_colors/red.css"
 elsif BACKGROUND_CHOICE == 'grey'
-    background_css = "/css/background_colors/grey.css"
+  background_css = "/css/background_colors/grey.css"
 else
-    background_css = "/css/background_colors/white.css"
+  background_css = "/css/background_colors/white.css"
 end
 
 html_template_path = File.join(__dir__, 'views', 'index.slim')
